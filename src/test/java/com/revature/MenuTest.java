@@ -11,7 +11,8 @@ public class MenuTest extends StringHolder {
 		if (answer.equalsIgnoreCase("log in")) {
 			System.out.println("This part isn't ready yet, mate!");
 		} else if (answer.equalsIgnoreCase("sign in")) {
-			System.out.println("1. If signing up for a client account, type \"client\" 2. If signing in for an employee account, type \"employee\".");
+			System.out.println("1. If signing up for a client account, type \"client\".");
+			System.out.println("2. If signing in for an employee account, type \"employee\".");
 			System.out.println("3. If signing up for an administrator account, type \"admin\".\n" + exit);
 		}
 		else {
@@ -22,8 +23,10 @@ public class MenuTest extends StringHolder {
 
 }
 class StringHolder{
-	static String exit = "3: At any time, type in \"exit\" to exit the application.";
+	static String exit = "At any time, type in \"exit\" to exit the application.";
 	public void initial(){
-		System.out.println("Welcome to Meade Bank!\n1: To sign in, type \"sign in\".\n2: To log in, type \"log in\". \n" + exit);
+		System.out.println("Welcome to Meade Bank!");
+		System.out.println("1: To sign in, type \"sign in\".");
+		System.out.println("2: To log in, type \"log in\". \n3: " + exit);
 	}
 }
