@@ -10,6 +10,9 @@ import org.junit.Test;
 public class AppTest {
     @Test
     public void shouldAnswerWithTrue() {
+    	
         assertTrue(true);
     }
 }
+//Menu tested true.
+//Menu with scanner tested true
