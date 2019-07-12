@@ -20,6 +20,12 @@ class Menu {
 	public void sign() {
 		System.out.println("We're so happy you've decided to sign up with us!");
 		System.out.println("We just need a bit of information to get started.");
-		System.out.println("Please give us your name.");
+		System.out.println("Please input your first and last name.");
+	}
+	public void query1() {
+		System.out.println("Please enter your username");
+	}
+	public void query2() {
+		System.out.println("Please enter your password");
 	}
 }

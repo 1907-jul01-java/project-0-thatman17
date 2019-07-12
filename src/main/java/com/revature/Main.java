@@ -6,6 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		int option;
+		int select;
 		do {
 			Menu menu = new Menu();
 			menu.title();
@@ -16,6 +17,12 @@ public class Main {
 			case 1: 
 				menu.title();
 				menu.log();
+				select = scanner.nextInt();
+				switch (select) {
+				case 1:
+					menu.title();
+					break;
+				}
 				break;
 			case 2:
 				menu.title();
