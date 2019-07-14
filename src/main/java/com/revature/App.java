@@ -1,11 +1,13 @@
 package com.revature;
 
 import java.util.Scanner;
+
 import com.revature.entities.*;
 import com.revature.util.*;
+
 import com.revature.models.*;
 
-public class Main{
+public class App{
 
 	public static void main(String[] args) {
 		int option;
@@ -72,7 +74,7 @@ public class Main{
 			case 4:
 				ConnectionUtil connectionUtil = new ConnectionUtil();
 		        MovieDao movieDao = new MovieDao(connectionUtil.getConnection());
-		        movieDao.insert(new Movie("The Dark Knight", 2007));
+		        movieDao.insert(new Movie("The Dark Knight", "o seven"));
 		        System.out.println(movieDao.getAll());
 		        connectionUtil.close();
 				break;

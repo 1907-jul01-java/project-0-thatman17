@@ -14,9 +14,9 @@ public class MovieDao implements Dao<Movie> {
     @Override
     public void insert(Movie movie) {
         try {
-            PreparedStatement pStatement = connection.prepareStatement("insert into movies(title, year) values(?, ?)");
-            pStatement.setString(1, movie.getTitle());
-            pStatement.setInt(2, movie.getYear());
+            PreparedStatement pStatement = connection.prepareStatement("insert into clients(username, password) values(?, ?)");
+            pStatement.setString(1, movie.getUsername());
+            pStatement.setString(2, movie.getPassword());
             pStatement.executeUpdate();
         } catch (SQLException e) {
 
@@ -29,11 +29,11 @@ public class MovieDao implements Dao<Movie> {
         List<Movie> movies = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from movies");
+            ResultSet resultSet = statement.executeQuery("select * from clients");
             while (resultSet.next()) {
                 movie = new Movie();
-                movie.setTitle(resultSet.getString("title"));
-                movie.setYear(resultSet.getInt("year"));
+                movie.setUsername(resultSet.getString("username"));
+                movie.setPassword(resultSet.getString("password"));
                 movies.add(movie);
             }
         } catch (SQLException e) {
