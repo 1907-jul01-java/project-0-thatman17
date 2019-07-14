@@ -1,4 +1,4 @@
-package util;
+package com.revature.util;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,7 +7,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
+/**
+ * ConnectionUtil
+ */
 public class ConnectionUtil {
     private Connection connection;
     private String url, user, password;
