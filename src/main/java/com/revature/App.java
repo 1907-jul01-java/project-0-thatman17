@@ -31,7 +31,6 @@ public class App{
 				switch (select) {
 				case 1:
 					menu.title();
-					int c = 0;
 					System.out.println("Please enter your username");
 					answer1 = scanner.nextLine();
 					if (answer1 != null && !answer1.isEmpty()) {
@@ -39,7 +38,6 @@ public class App{
 						answer2 = scanner.nextLine();
 						if (function.checkLogin(answer1, answer2)) {
 							System.out.println("Validated!");
-							c++;
 						} else if (answer2 != null && !answer2.isEmpty()){
 							System.out.println("The information you entered does not match anything stored in our database.");
 							System.out.println("Please look over your information and try again.");

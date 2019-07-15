@@ -46,15 +46,17 @@ public class Function implements Dao<Holder> {
     public boolean checkLogin(String username, String password) {
     	PreparedStatement pt = null;
     	try {
-    		pt = connection.prepareStatement("select username, password from clients where username =?");
+    		pt = connection.prepareStatement("select username, password, validate from clients where username =?");
     		pt.setString(1, username);
     		ResultSet resultset = pt.executeQuery();
     		String baName = "", baPass = "";
+    		boolean baValid = false;
     		while (resultset.next()) {
     			baName = resultset.getString("username");
     			baPass = resultset.getString("password");
+    			baValid = resultset.getBoolean("validate");
     		}
-    		if (baPass.equals(password) && (baName.equals(username))) {
+    		if (baPass.equals(password) && (baName.equals(username) && (baValid == true))) {
     			return true;
     		} else {
     		}
