@@ -1,14 +1,14 @@
     
 package com.revature.models;
 
-public class Movie {
+public class Holder {
     private String username;
     private String password;
 
-    public Movie() {
+    public Holder() {
     }
 
-    public Movie(String username, String password) {
+    public Holder(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -31,7 +31,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie [username=" + username + ", password=" + password + "]";
+        return username + " " + password;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Movie {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Movie other = (Movie) obj;
+        Holder other = (Holder) obj;
         if (username == null) {
             if (other.username != null)
                 return false;

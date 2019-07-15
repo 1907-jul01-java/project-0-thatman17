@@ -10,8 +10,11 @@ public interface Dao<E> {
     void insert(E e);
 
     List<E> getAll();
+    
 
     void update();
 
     void delete();
+    
+    boolean checkLogin(String username, String password);
 }

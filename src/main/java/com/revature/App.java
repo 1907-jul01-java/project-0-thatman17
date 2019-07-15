@@ -14,6 +14,8 @@ public class App{
 		int select;
 		String answer1 = new String();
 		String answer2 = new String();
+		ConnectionUtil connectionUtil = new ConnectionUtil();
+        Function function = new Function(connectionUtil.getConnection());
 		do {
 			Menu menu = new Menu();
 			menu.title();
@@ -24,24 +26,24 @@ public class App{
 			case 1: 
 				menu.title();
 				menu.log();
-				select = scanner.nextInt();
+				select = Integer.parseInt(scanner.nextLine());
 				switch (select) {
 				case 1:
 					menu.title();
 					int c = 0;
 					do {
-						System.out.println("Please enter username");
-						scanner.nextLine();
+						System.out.println("Please enter your username");
+						answer1 = scanner.nextLine();
 						if (answer1 != null && !answer1.isEmpty()) {
-							System.out.println("Please enter password");
+							System.out.println("Please enter your password");
 							answer2 = scanner.nextLine();
-							if (answer2 != null) {
-								c++;
+							if (function.checkLogin(answer1, answer2)) {
+								System.out.println("Validated!");
 							} else {
-								System.out.println("Please enter password");
+								System.out.println("Please enter your password");
 							}
 						} else {
-							System.out.println("Please enter a name");
+							System.out.println("Please enter your username");
 						} 
 					} while (c != 1);
 					break;
@@ -60,7 +62,8 @@ public class App{
 							System.out.println("Now please enter a password.");
 							answer2 = scanner.nextLine();
 							if (answer2 != null && !answer2.isEmpty()) {
-									System.out.println("Thank you. Your information has been received, and is pending bank approval. Goodbye!");
+									System.out.println("Thank you. Your information has been received, and is pending bank approval.");
+									function.insert(new Holder(answer1, answer2));
 									c++;
 							} else {}
 						}while (c !=1);
@@ -72,13 +75,12 @@ public class App{
 				scanner.close();
 				break;
 			case 4:
-				ConnectionUtil connectionUtil = new ConnectionUtil();
-		        MovieDao movieDao = new MovieDao(connectionUtil.getConnection());
-		        movieDao.insert(new Movie("The Dark Knight", "o seven"));
-		        System.out.println(movieDao.getAll());
-		        connectionUtil.close();
+		        function.insert(new Holder("The Dark Knight", "o seven"));
+		        System.out.println(function.getAll());
+		        
 				break;
 			}
 		} while(option != 3);
+		connectionUtil.close();
 	}
 }
