@@ -54,7 +54,7 @@ public class Function implements Dao<Holder> {
     			baName = resultset.getString("username");
     			baPass = resultset.getString("password");
     		}
-    		if (baPass.equals(password)) {
+    		if (baPass.equals(password) && (baName.equals(username))) {
     			return true;
     		} else {
     		}

@@ -10,13 +10,14 @@ import com.revature.models.*;
 public class App{
 
 	public static void main(String[] args) {
-		int option;
+		int option = 0;
 		int select;
 		String answer1 = new String();
 		String answer2 = new String();
 		ConnectionUtil connectionUtil = new ConnectionUtil();
         Function function = new Function(connectionUtil.getConnection());
 		do {
+			try {
 			Menu menu = new Menu();
 			menu.title();
 			menu.initial();
@@ -31,21 +32,25 @@ public class App{
 				case 1:
 					menu.title();
 					int c = 0;
-					do {
-						System.out.println("Please enter your username");
-						answer1 = scanner.nextLine();
-						if (answer1 != null && !answer1.isEmpty()) {
-							System.out.println("Please enter your password");
-							answer2 = scanner.nextLine();
-							if (function.checkLogin(answer1, answer2)) {
-								System.out.println("Validated!");
-							} else {
-								System.out.println("Please enter your password");
-							}
+					System.out.println("Please enter your username");
+					answer1 = scanner.nextLine();
+					if (answer1 != null && !answer1.isEmpty()) {
+						System.out.println("Please enter your password");
+						answer2 = scanner.nextLine();
+						if (function.checkLogin(answer1, answer2)) {
+							System.out.println("Validated!");
+							c++;
+						} else if (answer2 != null && !answer2.isEmpty()){
+							System.out.println("The information you entered does not match anything stored in our database.");
+							System.out.println("Please look over your information and try again.");
+							System.out.println();
 						} else {
-							System.out.println("Please enter your username");
-						} 
-					} while (c != 1);
+							System.out.println("Sorry, you seem to have forgotten to enter a password. Please try again.");
+						}
+					} else {
+						System.out.println("Sorry, you appear to haver forgotten to enter your username. Please try again.");
+						System.out.println();
+					} 
 					break;
 				}
 				break;
@@ -79,6 +84,10 @@ public class App{
 		        System.out.println(function.getAll());
 		        
 				break;
+			}
+			} catch (NumberFormatException e) {
+				System.out.println("Please enter a number.");
+				System.out.println();
 			}
 		} while(option != 3);
 		connectionUtil.close();
