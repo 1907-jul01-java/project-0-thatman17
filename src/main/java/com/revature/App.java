@@ -30,14 +30,60 @@ public class App{
 				select = Integer.parseInt(scanner.nextLine());
 				switch (select) {
 				case 1:
+					int checker = 0;
 					menu.title();
 					System.out.println("Please enter your username");
 					answer1 = scanner.nextLine();
 					if (answer1 != null && !answer1.isEmpty()) {
 						System.out.println("Please enter your password");
 						answer2 = scanner.nextLine();
-						if (function.checkLogin(answer1, answer2)) {
-							System.out.println("Validated!");
+						checker = (function.checkLogin(answer1, answer2));
+						if (checker == 1) {
+							System.out.println("Hello, " + answer1 + "! Unfortunately, your account has not yet been approved.");
+							System.out.println("Please try again later.");
+							System.out.println();
+						} else if (checker == 2) {
+							int choice = 0;
+							menu.title();
+							do {
+								System.out.println("Welcome, " + answer1 + "!");
+								System.out.println("Here are your options!");
+								System.out.println();
+								System.out.println("1: Check Balance");
+								System.out.println("2: Deposit da monies");
+								System.out.println("3. Withdraw some monies");
+								System.out.println("4. Exit");
+								choice = Integer.parseInt(scanner.nextLine());
+								switch (choice) {
+								case 1:
+									System.out.println();
+									int balance = function.checkBalance(answer1);
+									System.out.println("Your Balance is:\t" + balance);
+									System.out.println();
+									break;
+								case 2:
+									int money = 0;
+									System.out.println("Please enter an amount to deposit:");
+									do {
+										money = scanner.nextInt();
+										scanner.nextLine();
+										if (money < 0 ) {
+											System.out.println();
+											System.out.println("Please enter a positive whole number.");
+										}
+									} while (money < 0);
+									function.addMoney(answer1, money);
+									if (money == 0) {
+										System.out.println();
+										System.out.println("Your balance has not been changed.");
+										System.out.println();
+									} else {
+										System.out.println();
+										System.out.println("Your account has been updated!");
+										System.out.println();
+									}
+								}
+							} while(choice != 4);
 						} else if (answer2 != null && !answer2.isEmpty()){
 							System.out.println("The information you entered does not match anything stored in our database.");
 							System.out.println("Please look over your information and try again.");
@@ -57,7 +103,7 @@ public class App{
 				menu.title();
 				int c = 0;
 				do {
-					System.out.println("Please enter your username.");
+					System.out.println("Please enter a username.");
 					answer1 = scanner.nextLine();
 					if (answer1 != null && !answer1.isEmpty()) {
 						System.out.println("Thank you!");

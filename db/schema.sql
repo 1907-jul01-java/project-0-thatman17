@@ -3,6 +3,7 @@ create table clients (
   id serial primary key,
   username text not null,
   password text not null,
+  balance integer,
   validate boolean not null
 );
 insert into
@@ -10,6 +11,6 @@ insert into
 values
   ('thatman17', 'p4ssw0rd', 'f');
 insert into
-clients(username, password, validate)
+clients(username, password, balance, validate)
 values
-('check', 'test', 't');
+('check', 'test', 100, 't');
