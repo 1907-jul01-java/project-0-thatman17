@@ -25,11 +25,13 @@ public class App{
 			option = Integer.parseInt(scanner.nextLine());
 			switch (option) {
 			case 1: 
+				//log in
 				menu.title();
 				menu.log();
 				select = Integer.parseInt(scanner.nextLine());
 				switch (select) {
 				case 1:
+					//client
 					int checker = 0;
 					menu.title();
 					System.out.println("Please enter your username");
@@ -56,24 +58,26 @@ public class App{
 								choice = Integer.parseInt(scanner.nextLine());
 								switch (choice) {
 								case 1:
+									//check balance
 									System.out.println();
 									int balance = function.checkBalance(answer1);
 									System.out.println("Your Balance is:\t" + balance);
 									System.out.println();
 									break;
 								case 2:
-									int money = 0;
+									//deposit
+									int deposit = 0;
 									System.out.println("Please enter an amount to deposit:");
 									do {
-										money = scanner.nextInt();
+										deposit = scanner.nextInt();
 										scanner.nextLine();
-										if (money < 0 ) {
+										if (deposit < 0 ) {
 											System.out.println();
 											System.out.println("Please enter a positive whole number.");
 										}
-									} while (money < 0);
-									function.addMoney(answer1, money);
-									if (money == 0) {
+									} while (deposit < 0);
+									function.addMoney(answer1, deposit);
+									if (deposit == 0) {
 										System.out.println();
 										System.out.println("Your balance has not been changed.");
 										System.out.println();
@@ -82,7 +86,36 @@ public class App{
 										System.out.println("Your account has been updated!");
 										System.out.println();
 									}
-								}
+									break;
+								case 3:
+									//withdraw
+									int withdraw = 0;
+									int noNegative = function.checkBalance(answer1);
+									System.out.println("Please enter an amount to withdraw:");
+									do {
+										withdraw = scanner.nextInt();
+										scanner.nextLine();
+										if (withdraw < 0) {
+											System.out.println();
+											System.out.println("Please enter a positive whole number.");
+										} else if (withdraw >= noNegative) {
+											System.out.println();
+											System.out.println("The amount specified exceeds your total balance.");
+											System.out.println("Please try again.");
+											withdraw = 0;
+										}
+									} while (withdraw < 0);
+									function.takeMoney(answer1, withdraw);
+									if (withdraw == 0) {
+										System.out.println();
+										System.out.println("Your balance has not been changed.");
+										System.out.println();
+									} else {
+										System.out.println();
+										System.out.println("Your account has been updated!");
+										System.out.println();
+									}
+								} 
 							} while(choice != 4);
 						} else if (answer2 != null && !answer2.isEmpty()){
 							System.out.println("The information you entered does not match anything stored in our database.");
@@ -90,11 +123,51 @@ public class App{
 							System.out.println();
 						} else {
 							System.out.println("Sorry, you seem to have forgotten to enter a password. Please try again.");
+							System.out.println();
 						}
 					} else {
 						System.out.println("Sorry, you appear to haver forgotten to enter your username. Please try again.");
 						System.out.println();
 					} 
+					break;
+				case 2:
+					//employee sign-in
+					menu.title();
+					System.out.println("Please enter your username.");
+					answer1 = scanner.nextLine();
+					if (answer1 != null && !answer1.isEmpty()) {
+						System.out.println("Please enter your password");
+						answer2 = scanner.nextLine();
+						if (function.checkEmpLogin(answer1, answer2, "employees")){
+							int choice = 0;
+							do {
+								System.out.println("Welcome, " + answer1 + "!");
+								System.out.println("Please select an option:");
+								System.out.println();
+								System.out.println("1: View current clients");
+								System.out.println("2: Review client applications");
+								System.out.println("3: Back");
+								choice = Integer.parseInt(scanner.nextLine());
+								switch (choice) {
+								case 1: 
+									System.out.println(function.getAll("true"));
+									System.out.println("Enter any command to leave table");
+									scanner.nextLine();
+									break;
+								case 2:
+									System.out.println(function.getAll("false"));
+									System.out.println("Enter any command to leave table");
+									scanner.nextLine();
+								}
+							} while (choice != 3);
+						} else if (answer2 != null && !answer2.isEmpty()) {System.out.println("The information entered does not match an employee in our database.");}
+						else {
+							System.out.println("You appear to have forgotten to enter your password. Please try again.");
+						}
+					} else {
+						System.out.println("You appear to have forgotten to enter your username. Please try again.");
+						System.out.println();
+					}
 					break;
 				}
 				break;
@@ -125,7 +198,7 @@ public class App{
 				break;
 			case 4:
 		        function.insert(new Holder("The Dark Knight", "o seven"));
-		        System.out.println(function.getAll());
+		        System.out.println(function.getAll("true"));
 		        
 				break;
 			}

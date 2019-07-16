@@ -16,6 +16,7 @@ class Menu {
 		System.out.println("1: Client Sign-In");
 		System.out.println("2: Employee Sign-In");
 		System.out.println("3: Admin Sign-In");
+		System.out.println("4: Exit");
 	}
 	public void sign() {
 		System.out.println("We're so happy you've decided to sign up with us!");

@@ -24,12 +24,14 @@ public class Function implements Dao<Holder> {
     }
 
     @Override
-    public List<Holder> getAll() {
+    public List<Holder> getAll(String validate) {
         Holder holder;
         List<Holder> holders = new ArrayList<>();
+        String strQuery = "select * from clients where validate = $something";
         try {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from clients");
+        	String query = strQuery.replace("$something", validate);
+            PreparedStatement pt = connection.prepareStatement(query);
+            ResultSet resultSet = pt.executeQuery();
             while (resultSet.next()) {
                 holder = new Holder();
                 holder.setUsername(resultSet.getString("username"));
@@ -40,6 +42,13 @@ public class Function implements Dao<Holder> {
 
         }
         return holders;
+    }
+    
+    @Override
+    public List<Holder> display(String username) {
+    	Holder holder;
+    	List<Holder> holders = new ArrayList<>();
+    	
     }
     
     @Override
@@ -78,6 +87,7 @@ public class Function implements Dao<Holder> {
     	}catch (Exception e) {}
     	return balance;
     }
+    
     @Override
     public void addMoney(String username, int money) {
     	try {
@@ -86,6 +96,36 @@ public class Function implements Dao<Holder> {
     		pt.setString(2, username);
     		pt.executeUpdate();
     	}catch (Exception e) {}
+    }
+    
+    @Override
+    public void takeMoney(String username, int money) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("update clients set balance = balance - ? where username =?");
+    		pt.setInt(1, money);
+    		pt.setString(2, username);
+    		pt.executeUpdate();
+    	}catch (Exception e) {}
+    }
+    
+    @Override
+    public boolean checkEmpLogin(String username, String password, String info) {
+    	String strQuery = "select username, password from $tableName where username =?";
+    	try {
+    		String query = strQuery.replace("$tableName", info);
+    		PreparedStatement pt = connection.prepareStatement(query);
+    		pt.setString(1, username);
+    		ResultSet resultset = pt.executeQuery();
+    		String baName = "", baPass = "";
+    		while (resultset.next()) {
+    			baName = resultset.getString("username");
+    			baPass = resultset.getString("password");
+    		}
+    		if (baPass.equals(password) && (baName.equals(username))){
+    			return true;
+    		}
+    	}catch (Exception e) {}
+    	return false;
     }
     
     @Override

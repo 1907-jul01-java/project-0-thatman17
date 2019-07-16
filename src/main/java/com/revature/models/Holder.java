@@ -31,7 +31,7 @@ public class Holder {
 
     @Override
     public String toString() {
-        return username + " " + password;
+        return "Username: " + username + "\tPassword: " + password;
     }
 
     @Override

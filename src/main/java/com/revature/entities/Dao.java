@@ -9,7 +9,7 @@ import java.util.List;
 public interface Dao<E> {
     void insert(E e);
 
-    List<E> getAll();
+    List<E> getAll(String validate);
     
 
     void update();
@@ -21,4 +21,10 @@ public interface Dao<E> {
     int checkBalance(String username);
     
     void addMoney(String username, int money);
+    
+    void takeMoney(String username, int money);
+    
+    boolean checkEmpLogin(String username, String password, String info);
+    
+    List<E> display(String username);
 }
