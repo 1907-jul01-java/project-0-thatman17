@@ -3,18 +3,18 @@ package com.revature.entities;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.revature.models.Holder;
+import com.revature.models.*;
 
 /**
  * MovieDao
  */
-public class Function implements Dao<Holder> {
+public class Function implements Dao<Holder>, Other<Client> {
     Connection connection;
 
     @Override
     public void insert(Holder holder) {
         try {
-            PreparedStatement pStatement = connection.prepareStatement("insert into clients(username, password, validate) values(?, ?, 'f')");
+            PreparedStatement pStatement = connection.prepareStatement("insert into clients(username, password) values(?, ?)");
             pStatement.setString(1, holder.getUsername());
             pStatement.setString(2, holder.getPassword());
             pStatement.executeUpdate();
@@ -27,7 +27,7 @@ public class Function implements Dao<Holder> {
     public List<Holder> getAll(String validate) {
         Holder holder;
         List<Holder> holders = new ArrayList<>();
-        String strQuery = "select * from clients where validate = $something";
+        String strQuery = "select * from clients where validate $something";
         try {
         	String query = strQuery.replace("$something", validate);
             PreparedStatement pt = connection.prepareStatement(query);
@@ -35,7 +35,7 @@ public class Function implements Dao<Holder> {
             while (resultSet.next()) {
                 holder = new Holder();
                 holder.setUsername(resultSet.getString("username"));
-                holder.setPassword(resultSet.getString("password"));
+                holder.setBalance(resultSet.getInt("balance"));
                 holders.add(holder);
             }
         } catch (SQLException e) {
@@ -45,10 +45,58 @@ public class Function implements Dao<Holder> {
     }
     
     @Override
-    public List<Holder> display(String username) {
+    public List<Holder> adminGetAll(){
     	Holder holder;
     	List<Holder> holders = new ArrayList<>();
-    	
+    	try {
+    		Statement statement = connection.createStatement();
+    		ResultSet resultset = statement.executeQuery("select * from clients where validate = 1");
+    		while (resultset.next()) {
+    			holder = new Holder();
+    			holder.setUsername(resultset.getString("username"));
+    			holder.setBalance(resultset.getInt("balance"));
+    			holders.add(holder);
+    		}
+    	}catch(SQLException e) {}
+    	return holders;
+    }
+    
+    @Override
+    public List<Client> display(String username){
+    	Client holder;
+    	List<Client> holders = new ArrayList<>();
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("select username, password from clients where username =?");
+    		pt.setString(1, username);
+    		ResultSet resultset = pt.executeQuery();
+    		while (resultset.next()) {
+    			holder = new Client();
+    			holder.setUsername(resultset.getString("username"));
+    			holder.setPassword(resultset.getString("password"));
+    			holders.add(holder);
+    		}
+    	}catch (SQLException e) {
+    		
+    	} return holders;
+    }
+    
+    @Override
+    public List<Holder> adminDisplay(String username){
+    	Holder holder;
+    	List<Holder> holders = new ArrayList<>();
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("select username, balance from clients where username =?");
+    		pt.setString(1, username);
+    		ResultSet resultset = pt.executeQuery();
+    		while (resultset.next()) {
+    			holder = new Holder();
+    			holder.setUsername(resultset.getString("username"));
+    			holder.setBalance(resultset.getInt("balance"));
+    			holders.add(holder);
+    		}
+    	}catch (SQLException e) {
+    		
+    	} return holders;
     }
     
     @Override
@@ -59,19 +107,41 @@ public class Function implements Dao<Holder> {
     		pt.setString(1, username);
     		ResultSet resultset = pt.executeQuery();
     		String baName = "", baPass = "";
-    		boolean baValid = false;
+    		int baValid = 0;
     		while (resultset.next()) {
     			baName = resultset.getString("username");
     			baPass = resultset.getString("password");
-    			baValid = resultset.getBoolean("validate");
+    			baValid = resultset.getInt("validate");
     		}
-    		if (baPass.equals(password) && (baName.equals(username) && (baValid == true))) {
-    			checker = 2;
-    		} else if (baPass.equals(password) && (baName.equals(username))){
+    		if (baPass.equals(password) && (baName.equals(username) && (baValid == 2))) {
     			checker = 1;
+    		} else if (baPass.equals(password) && (baName.equals(username) && (baValid == 1))){
+    			checker = 2;
+    		} else if (baPass.equals(password) && (baName.equals(username))) {
+    			checker = 3;
     		}
     	} catch (Exception e) {
     	} return checker;
+    }
+    
+    @Override
+    public boolean checkAdminLogin(String username, String password, int code) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("select username, password, code from admin where username =?");
+    		pt.setString(1, username);
+    		ResultSet resultset = pt.executeQuery();
+    		String baName ="", baPass = "";
+    		int adCode = 0;
+    		while (resultset.next()) {
+    			baName = resultset.getString("username");
+    			baPass = resultset.getString("password");
+    			adCode = resultset.getInt("code");
+    		}
+    		if (baPass.contentEquals(password) && (baName.equals(username) && (adCode == code))){
+    			return true;
+    		}
+    	}catch (Exception e) {}
+    	return false;
     }
 
     @Override
@@ -126,6 +196,22 @@ public class Function implements Dao<Holder> {
     		}
     	}catch (Exception e) {}
     	return false;
+    }
+    
+    @Override
+    
+    public void approval(String username, int approval) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("update clients set validate = ? where username =?");
+    		pt.setString(2, username);
+    		if (approval == 1) {
+    			pt.setInt(1, 1);
+    			pt.executeUpdate();
+    		} else if (approval == 2) {
+    			pt.setInt(1, 2);
+    			pt.executeUpdate();
+    		} else {}
+    	}catch (Exception e) {}
     }
     
     @Override

@@ -1,9 +1,12 @@
     
 package com.revature.models;
 
+//this one has balance
+
 public class Holder {
     private String username;
     private String password;
+    private int balance;
 
     public Holder() {
     }
@@ -20,7 +23,11 @@ public class Holder {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    
+    public void setBalance(int balance) {
+    	this.balance = balance;
+    }
+    
     public String getPassword() {
         return password;
     }
@@ -31,7 +38,7 @@ public class Holder {
 
     @Override
     public String toString() {
-        return "Username: " + username + "\tPassword: " + password;
+        return "Username: " + username + " Balance: " + balance;
     }
 
     @Override

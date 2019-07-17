@@ -40,11 +40,11 @@ public class App{
 						System.out.println("Please enter your password");
 						answer2 = scanner.nextLine();
 						checker = (function.checkLogin(answer1, answer2));
-						if (checker == 1) {
+						if (checker == 3) {
 							System.out.println("Hello, " + answer1 + "! Unfortunately, your account has not yet been approved.");
 							System.out.println("Please try again later.");
 							System.out.println();
-						} else if (checker == 2) {
+						}else if (checker == 2) {
 							int choice = 0;
 							menu.title();
 							do {
@@ -117,6 +117,10 @@ public class App{
 									}
 								} 
 							} while(choice != 4);
+						} else if (checker == 1) {
+							System.out.println("Unfortunately, your application has been denied.");
+							System.out.println("Probably because the employee reviewing your application decided you were a loser. Goodbye!");
+							System.out.println();
 						} else if (answer2 != null && !answer2.isEmpty()){
 							System.out.println("The information you entered does not match anything stored in our database.");
 							System.out.println("Please look over your information and try again.");
@@ -131,7 +135,7 @@ public class App{
 					} 
 					break;
 				case 2:
-					//employee sign-in
+					//employee log-in
 					menu.title();
 					System.out.println("Please enter your username.");
 					answer1 = scanner.nextLine();
@@ -150,22 +154,107 @@ public class App{
 								choice = Integer.parseInt(scanner.nextLine());
 								switch (choice) {
 								case 1: 
-									System.out.println(function.getAll("true"));
-									System.out.println("Enter any command to leave table");
+									System.out.println(function.getAll("= 1"));
+									System.out.println("Press Enter to leave Client View.");
 									scanner.nextLine();
 									break;
 								case 2:
-									System.out.println(function.getAll("false"));
-									System.out.println("Enter any command to leave table");
-									scanner.nextLine();
+									String entry = "";
+									int entry2 = 0;
+									do {
+										System.out.println(function.getAll("is null"));
+										System.out.println("Enter in a username to approve or deny a client.");
+										System.out.println("Enter in \"Back\" or \"b\" to return.");
+										entry = scanner.nextLine();
+										if (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b")){
+											System.out.println(function.display(entry));
+											System.out.println();
+											System.out.println("Options:");
+											System.out.println();
+											System.out.println("1. Approve");
+											System.out.println("2. Deny");
+											System.out.println("3. Back");
+											entry2 = Integer.parseInt(scanner.nextLine());
+											function.approval(entry, entry2);
+										}
+									} while (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b"));
 								}
 							} while (choice != 3);
-						} else if (answer2 != null && !answer2.isEmpty()) {System.out.println("The information entered does not match an employee in our database.");}
+						} else if (answer2 != null && !answer2.isEmpty()) {
+							System.out.println("The information entered does not match an employee in our database.");
+							System.out.println("Please try again.");
+							}
 						else {
 							System.out.println("You appear to have forgotten to enter your password. Please try again.");
 						}
 					} else {
 						System.out.println("You appear to have forgotten to enter your username. Please try again.");
+						System.out.println();
+					}
+					break;
+				case 3:
+					//this is for administrator log-in
+					menu.title();
+					System.out.println("Please enter your username");
+					answer1 = scanner.nextLine();
+					if (answer1 != null && !answer1.isEmpty()) {
+						System.out.println("Please enter your password");
+						answer2 = scanner.nextLine();
+						if (answer2 != null && !answer2.isEmpty()) {
+							System.out.println("Please enter the super-secret admin code.");
+							int code = Integer.parseInt(scanner.nextLine());
+							if (function.checkAdminLogin(answer1, answer2, code)) {
+								int choice = 0;
+								do {
+									System.out.println("Welcome " + answer1 + "!");
+									System.out.println();
+									System.out.println("Here are your options.");
+									System.out.println();
+									System.out.println("1. Change client balance");
+									System.out.println("2. Check employees");
+									System.out.println("3. Review client applications");
+									System.out.println("4. Create new employee");
+									System.out.println("5. Big Red Button");
+									System.out.println("6. Return");
+									choice = Integer.parseInt(scanner.nextLine());
+									switch (choice) {
+									case 1:
+										//Manipulate client data
+										String entry = "";
+										int entry2 = 0;
+										do {
+											System.out.println(function.adminGetAll());
+											System.out.println();
+											System.out.println("Enter in the username of the client whose data you would like to change.");
+											System.out.println("Enter in \"Back\" or \"b\" to return.");
+											entry = scanner.nextLine();
+											if (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b")) {
+												System.out.println(function.adminDisplay(entry));
+												System.out.println();
+												System.out.println("Options:");
+												System.out.println();
+												System.out.println("1. Deposit");
+												System.out.println("2. Withdraw");
+												System.out.println("3. Return");
+												entry2 = Integer.parseInt(scanner.nextLine());
+											}
+										}while(!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b"));
+										break;
+									}
+								}while (choice != 6);
+							}else {
+								System.out.println("These are not admin credentials.");
+								System.out.println("Perhaps you meant to log in somewhere else?");
+								System.out.println();
+							}
+						} else {
+							System.out.println("You seem to have forgotten to enter you password.");
+							System.out.println("An admin really shouldn't do that.");
+							System.out.println();
+						}
+					}else {
+						System.out.println("You seem to have forgotten to enter a username.");
+						System.out.println("Please try again.");
 						System.out.println();
 					}
 					break;

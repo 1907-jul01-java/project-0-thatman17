@@ -11,6 +11,7 @@ public interface Dao<E> {
 
     List<E> getAll(String validate);
     
+    List<E> adminDisplay(String username);
 
     void update();
 
@@ -26,5 +27,9 @@ public interface Dao<E> {
     
     boolean checkEmpLogin(String username, String password, String info);
     
-    List<E> display(String username);
+    void approval(String username, int approval);
+    
+    boolean checkAdminLogin(String username, String password, int code);
+    
+    List<E> adminGetAll();
 }
