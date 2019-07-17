@@ -62,7 +62,7 @@ public class App{
 									//check balance
 									System.out.println();
 									int balance = function.checkBalance(answer1);
-									System.out.println("Your Balance is:\t" + balance);
+									System.out.println("Your Balance is:\t$" + balance);
 									System.out.println();
 									break;
 								case 2:
@@ -374,7 +374,7 @@ public class App{
 								System.out.println();
 							}
 						} else {
-							System.out.println("You seem to have forgotten to enter you password.");
+							System.out.println("You seem to have forgotten to enter your password.");
 							System.out.println("An admin really shouldn't do that.");
 							System.out.println();
 						}

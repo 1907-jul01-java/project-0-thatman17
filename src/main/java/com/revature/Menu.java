@@ -12,16 +12,11 @@ class Menu {
 		System.out.println("3: Exit");
 	}
 	public void log() {
-		System.out.println("Please select your designation.");
-		System.out.println("1: Client Sign-In");
-		System.out.println("2: Employee Sign-In");
-		System.out.println("3: Admin Sign-In");
+		System.out.println("Please choose an option.");
+		System.out.println("1: Client Log-In");
+		System.out.println("2: Employee Log-In");
+		System.out.println("3: Admin Log-In");
 		System.out.println("4: Exit");
-	}
-	public void sign() {
-		System.out.println("We're so happy you've decided to sign up with us!");
-		System.out.println("We just need a bit of information to get started.");
-		System.out.println("Please input your first and last name.");
 	}
 	public void query1() {
 		System.out.println("Please enter your username");
