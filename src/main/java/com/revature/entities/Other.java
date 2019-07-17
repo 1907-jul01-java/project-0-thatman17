@@ -9,4 +9,6 @@ public interface Other<C> {
 	List<C> getEmployees();
 	
 	void place(C c);
+	
+	void bigRed();
 }

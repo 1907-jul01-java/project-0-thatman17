@@ -13,8 +13,6 @@ public interface Dao<E> {
     
     List<E> adminDisplay(String username);
 
-    void update();
-
     void delete(String username);
     
     int checkLogin(String username, String password);

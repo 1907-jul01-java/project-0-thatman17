@@ -240,17 +240,20 @@ public class Function implements Dao<Holder>, Other<Client> {
     		} else {}
     	}catch (Exception e) {}
     }
-    
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public void delete(String username) {
     	try {
     		PreparedStatement pt = connection.prepareStatement("delete from employees where username =?");
     		pt.setString(1, username);
+    		pt.execute();
+    	}catch (Exception e) {}
+    }
+    
+    @Override
+    public void bigRed() {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("truncate employees, clients");
     		pt.execute();
     	}catch (Exception e) {}
     }

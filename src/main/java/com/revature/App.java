@@ -350,6 +350,22 @@ public class App{
 											System.out.println();
 										}
 										break;
+									case 5:
+										System.out.println("Are you sure you want to press the big red button?");
+										System.out.println("This will delete all data for employees and clients.");
+										System.out.println("Y/N");
+										String decision = scanner.nextLine();
+										if (decision.equalsIgnoreCase("Yes") || decision.equalsIgnoreCase("y")){
+											function.bigRed();
+											System.out.println("Everything deleted.");
+											System.out.println();
+										}else if (decision.equalsIgnoreCase("No") || decision.equalsIgnoreCase("n")){
+											System.out.println("Button not pressed.");
+											System.out.println();
+										}else {
+											System.out.println("An incorrect or wrong answer equates to no in this scenario.");
+											System.out.println();
+										}
 									}
 								}while (choice != 6);
 							}else {
@@ -396,6 +412,7 @@ public class App{
 				System.out.println("Thank you for banking with us!");
 				scanner.close();
 				break;
+			}
 			} catch (NumberFormatException e) {
 				System.out.println("Please enter a number.");
 				System.out.println();
