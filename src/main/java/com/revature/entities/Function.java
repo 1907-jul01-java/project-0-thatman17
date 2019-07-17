@@ -257,6 +257,25 @@ public class Function implements Dao<Holder>, Other<Client> {
     		pt.execute();
     	}catch (Exception e) {}
     }
+    
+    @Override
+    public boolean check(String username) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("select username, validate from clients where username =?");
+    		pt.setString(1, username);
+    		ResultSet resultset = pt.executeQuery();
+    		String baName ="";
+    		int validate = 0;
+    		while (resultset.next()){
+    			baName = resultset.getString("username");
+    			validate = resultset.getInt("validate");
+    		}
+    		if (baName.equalsIgnoreCase(username) && validate == 1) {
+    			return true;
+    		}
+    	}catch (Exception e) {}
+    	return false;
+    }
 
     public Function(Connection connection) {
         this.connection = connection;

@@ -11,4 +11,6 @@ public interface Other<C> {
 	void place(C c);
 	
 	void bigRed();
+	
+	boolean check(String username);
 }

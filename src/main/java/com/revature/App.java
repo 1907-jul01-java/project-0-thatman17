@@ -55,7 +55,8 @@ public class App{
 								System.out.println("1: Check Balance");
 								System.out.println("2: Deposit da monies");
 								System.out.println("3. Withdraw some monies");
-								System.out.println("4. Exit");
+								System.out.println("4. Transfer Funds");
+								System.out.println("5. Exit");
 								choice = Integer.parseInt(scanner.nextLine());
 								switch (choice) {
 								case 1:
@@ -117,8 +118,49 @@ public class App{
 										System.out.println();
 									}
 									break;
+								case 4:
+									int transfer = 0;
+									int noNegative1 = function.checkBalance(answer1);
+									String user = "";
+									do {
+										System.out.println("Please enter the username of the individual you would like to transfer funds to, or enter \"Back\" to leave.");
+										user = scanner.nextLine();
+										if (user != null && !user.isEmpty()) {
+											if (function.check(user)) {
+												System.out.println("Enter amount of funds to transfer.");
+												do {
+													transfer = scanner.nextInt();
+													scanner.nextLine();
+													if (transfer < 0) {
+														System.out.println();
+														System.out.println("Please enter a positive whole number.");
+													} else if (transfer >= noNegative1) {
+														System.out.println();
+														System.out.println("The amount specified exceeds your total balance.");
+														System.out.println("Please try again.");
+														transfer = 0;
+													}
+												}while(transfer < 0);
+												function.takeMoney(answer1, transfer);
+												function.addMoney(user, transfer);
+												if (transfer == 0) {
+													System.out.println();
+													System.out.println("The balances have not been changed.");
+													System.out.println();
+												} else {
+													System.out.println();
+													System.out.println("The accounts have been updated!");
+													System.out.println();
+												}
+											}else {
+												System.out.println("Sorry, that's not a valid username.");
+											}
+										}else {
+											System.out.println("You need to put in a username to transfer funds");
+										}
+									}while (!user.equalsIgnoreCase("back"));
 								} 
-							} while(choice != 4);
+							} while(choice != 5);
 						} else if (checker == 1) {
 							System.out.println("Unfortunately, your application has been denied.");
 							System.out.println("Probably because the employee reviewing your application decided you were a loser. Goodbye!");
