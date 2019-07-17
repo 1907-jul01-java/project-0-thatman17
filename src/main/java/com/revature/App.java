@@ -348,6 +348,7 @@ public class App{
 											System.out.println("Try again!");
 											System.out.println();
 										}
+										break;
 									}
 								}while (choice != 6);
 							}else {
@@ -393,12 +394,6 @@ public class App{
 				System.out.println("Thank you for banking with us!");
 				scanner.close();
 				break;
-			case 4:
-		        function.insert(new Holder("The Dark Knight", "o seven"));
-		        System.out.println(function.getAll("true"));
-		        
-				break;
-			}
 			} catch (NumberFormatException e) {
 				System.out.println("Please enter a number.");
 				System.out.println();
