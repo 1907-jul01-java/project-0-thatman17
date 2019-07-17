@@ -23,7 +23,7 @@ values
 insert into
 clients(username, password)
 values
-('Roger' 'complex')
+('Roger', 'complex');
 
 create table employees (
 	id serial primary key, 
