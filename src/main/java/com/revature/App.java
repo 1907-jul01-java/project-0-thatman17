@@ -26,6 +26,7 @@ public class App{
 			switch (option) {
 			case 1: 
 				//log in
+				do {
 				menu.title();
 				menu.log();
 				select = Integer.parseInt(scanner.nextLine());
@@ -368,6 +369,7 @@ public class App{
 					}
 					break;
 				}
+				}while(select != 4);
 				break;
 			case 2:
 				//This is for signing in
