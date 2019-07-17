@@ -13,4 +13,6 @@ public interface Other<C> {
 	void bigRed();
 	
 	boolean check(String username);
+	
+	List<C> getAllClients(String validate);
 }

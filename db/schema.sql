@@ -20,6 +20,10 @@ insert into
 clients(username, password, balance, validate)
 values
 ('steven', 'ugly', 20000, '1');
+insert into
+clients(username, password)
+values
+('Roger' 'complex')
 
 create table employees (
 	id serial primary key, 

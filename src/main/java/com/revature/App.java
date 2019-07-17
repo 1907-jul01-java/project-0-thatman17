@@ -206,7 +206,7 @@ public class App{
 									String entry = "";
 									int entry2 = 0;
 									do {
-										System.out.println(function.getAll("is null"));
+										System.out.println(function.getAllClients("is null"));
 										System.out.println("Enter in a username to approve or deny a client.");
 										System.out.println("Enter in \"Back\" or \"b\" to return.");
 										entry = scanner.nextLine();
@@ -355,7 +355,7 @@ public class App{
 										break;
 									case 3: 
 										do {
-											System.out.println(function.getAll("is null"));
+											System.out.println(function.getAllClients("is null"));
 											System.out.println("Enter in a username to approve or deny a client.");
 											System.out.println("Enter in \"Back\" or \"b\" to return.");
 											entry = scanner.nextLine();

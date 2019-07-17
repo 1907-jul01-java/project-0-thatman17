@@ -55,6 +55,27 @@ public class Function implements Dao<Holder>, Other<Client> {
     }
     
     @Override
+    public List<Client> getAllClients(String validate) {
+        Client client;
+        List<Client> clients = new ArrayList<>();
+        String strQuery = "select * from clients where validate $something";
+        try {
+        	String query = strQuery.replace("$something", validate);
+            PreparedStatement pt = connection.prepareStatement(query);
+            ResultSet resultSet = pt.executeQuery();
+            while (resultSet.next()) {
+                client = new Client();
+                client.setUsername(resultSet.getString("username"));
+                client.setPassword(resultSet.getString("password"));
+                clients.add(client);
+            }
+        } catch (SQLException e) {
+
+        }
+        return clients;
+    }
+    
+    @Override
     public List<Holder> adminGetAll(){
     	Holder holder;
     	List<Holder> holders = new ArrayList<>();
