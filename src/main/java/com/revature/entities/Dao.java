@@ -15,7 +15,7 @@ public interface Dao<E> {
 
     void update();
 
-    void delete();
+    void delete(String username);
     
     int checkLogin(String username, String password);
     

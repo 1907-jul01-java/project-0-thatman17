@@ -115,6 +115,7 @@ public class App{
 										System.out.println("Your account has been updated!");
 										System.out.println();
 									}
+									break;
 								} 
 							} while(choice != 4);
 						} else if (checker == 1) {
@@ -229,17 +230,124 @@ public class App{
 											System.out.println("Enter in \"Back\" or \"b\" to return.");
 											entry = scanner.nextLine();
 											if (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b")) {
-												System.out.println(function.adminDisplay(entry));
-												System.out.println();
-												System.out.println("Options:");
-												System.out.println();
-												System.out.println("1. Deposit");
-												System.out.println("2. Withdraw");
-												System.out.println("3. Return");
-												entry2 = Integer.parseInt(scanner.nextLine());
+												do {
+													System.out.println(function.adminDisplay(entry));
+													System.out.println();
+													System.out.println("Options:");
+													System.out.println();
+													System.out.println("1. Deposit");
+													System.out.println("2. Withdraw");
+													System.out.println("3. Return");
+													entry2 = Integer.parseInt(scanner.nextLine());
+													switch (entry2) {
+													case 1:
+														//deposit
+														int deposit = 0;
+														System.out.println("Please enter an amount to deposit:");
+														do {
+															deposit = scanner.nextInt();
+															scanner.nextLine();
+															if (deposit < 0 ) {
+																System.out.println();
+																System.out.println("Please enter a positive whole number.");
+															}
+														} while (deposit < 0);
+														function.addMoney(entry, deposit);
+														if (deposit == 0) {
+															System.out.println();
+															System.out.println("The balance has not been changed.");
+															System.out.println();
+														} else {
+															System.out.println();
+															System.out.println("The account has been updated!");
+															System.out.println();
+														}
+														break;
+													case 2:
+														//withdraw
+														int withdraw = 0;
+														int noNegative = function.checkBalance(entry);
+														System.out.println("Please enter an amount to withdraw:");
+														do {
+															withdraw = scanner.nextInt();
+															scanner.nextLine();
+															if (withdraw < 0) {
+																System.out.println();
+																System.out.println("Please enter a positive whole number.");
+															} else if (withdraw >= noNegative) {
+																System.out.println();
+																System.out.println("The amount specified exceeds the total balance.");
+																System.out.println("Please try again.");
+																withdraw = 0;
+															}
+														} while (withdraw < 0);
+														function.takeMoney(entry, withdraw);
+														if (withdraw == 0) {
+															System.out.println();
+															System.out.println("The balance has not been changed.");
+															System.out.println();
+														} else {
+															System.out.println();
+															System.out.println("The account has been updated!");
+															System.out.println();
+														}
+														break;
+													}
+												}while(entry2 != 3);
 											}
 										}while(!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b"));
 										break;
+									case 2:
+										do {
+											System.out.println(function.getEmployees());
+											System.out.println();
+											System.out.println("Type in an employee's username to delete that employee.");
+											System.out.println("Otherwise, type \"Back\" or \"b\" to leave.");
+											entry = scanner.nextLine();
+											if (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b")) {
+												function.delete(entry);
+												System.out.println("Employee deleted!");
+											}
+										}while(!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b"));
+										break;
+									case 3: 
+										do {
+											System.out.println(function.getAll("is null"));
+											System.out.println("Enter in a username to approve or deny a client.");
+											System.out.println("Enter in \"Back\" or \"b\" to return.");
+											entry = scanner.nextLine();
+											if (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b")){
+												System.out.println(function.display(entry));
+												System.out.println();
+												System.out.println("Options:");
+												System.out.println();
+												System.out.println("1. Approve");
+												System.out.println("2. Deny");
+												System.out.println("3. Back");
+												entry2 = Integer.parseInt(scanner.nextLine());
+												function.approval(entry, entry2);
+											}
+										} while (!entry.equalsIgnoreCase("back") && !entry.equalsIgnoreCase("b"));
+										break;
+									case 4:
+										System.out.println("Please enter a username for the employee.");
+										String username = scanner.nextLine();
+										if (username != null && !username.isEmpty()) {
+											System.out.println("Now enter a password for the employee.");
+											String password = scanner.nextLine();
+											if (password != null && !password.isEmpty()) {
+												function.place(new Client(username, password));
+												System.out.println("New Emplyee account created!");
+											}else {
+												System.out.println("An employee without a password could break the bank.");
+												System.out.println("Try again.");
+												System.out.println();
+											}
+										}else {
+											System.out.println("Can't make an employee without a username.");
+											System.out.println("Try again!");
+											System.out.println();
+										}
 									}
 								}while (choice != 6);
 							}else {

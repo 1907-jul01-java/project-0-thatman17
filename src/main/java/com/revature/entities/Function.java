@@ -22,6 +22,16 @@ public class Function implements Dao<Holder>, Other<Client> {
 
         }
     }
+    
+    @Override
+    public void place(Client client) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("insert into employees(username, password) values(?, ?)");
+    		pt.setString(1, client.getUsername());
+    		pt.setString(2, client.getPassword());
+    		pt.executeUpdate();
+    	}catch (SQLException e) {}
+    }
 
     @Override
     public List<Holder> getAll(String validate) {
@@ -59,6 +69,23 @@ public class Function implements Dao<Holder>, Other<Client> {
     		}
     	}catch(SQLException e) {}
     	return holders;
+    }
+    
+    @Override
+    public List<Client> getEmployees(){
+    	Client client;
+    	List<Client> clients = new ArrayList<>();
+    	try {
+    		Statement statement = connection.createStatement();
+    		ResultSet resultset = statement.executeQuery("select * from employees");
+    		while (resultset.next()) {
+    			client = new Client();
+    			client.setUsername(resultset.getString("username"));
+    			client.setPassword(resultset.getString("password"));
+    			clients.add(client);
+    		}
+    	}catch(SQLException e) {}
+    	return clients;
     }
     
     @Override
@@ -220,8 +247,12 @@ public class Function implements Dao<Holder>, Other<Client> {
     }
 
     @Override
-    public void delete() {
-
+    public void delete(String username) {
+    	try {
+    		PreparedStatement pt = connection.prepareStatement("delete from employees where username =?");
+    		pt.setString(1, username);
+    		pt.execute();
+    	}catch (Exception e) {}
     }
 
     public Function(Connection connection) {
