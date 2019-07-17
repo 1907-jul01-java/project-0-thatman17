@@ -53,8 +53,8 @@ public class App{
 								System.out.println("Here are your options!");
 								System.out.println();
 								System.out.println("1: Check Balance");
-								System.out.println("2: Deposit da monies");
-								System.out.println("3. Withdraw some monies");
+								System.out.println("2: Deposit funds into account");
+								System.out.println("3. Withdraw funds from account");
 								System.out.println("4. Transfer Funds");
 								System.out.println("5. Exit");
 								choice = Integer.parseInt(scanner.nextLine());
@@ -380,7 +380,7 @@ public class App{
 											String password = scanner.nextLine();
 											if (password != null && !password.isEmpty()) {
 												function.place(new Client(username, password));
-												System.out.println("New Emplyee account created!");
+												System.out.println("New Employee account created!");
 											}else {
 												System.out.println("An employee without a password could break the bank.");
 												System.out.println("Try again.");
