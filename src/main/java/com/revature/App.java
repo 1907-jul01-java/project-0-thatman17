@@ -100,7 +100,7 @@ public class App{
 										if (withdraw < 0) {
 											System.out.println();
 											System.out.println("Please enter a positive whole number.");
-										} else if (withdraw >= noNegative) {
+										} else if (withdraw > noNegative) {
 											System.out.println();
 											System.out.println("The amount specified exceeds your total balance.");
 											System.out.println("Please try again.");

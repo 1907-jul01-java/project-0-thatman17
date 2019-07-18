@@ -9,9 +9,9 @@ create table clients (
   validate integer
 );
 insert into
-  clients(username, password)
+  clients(username, password, balance)
 values
-  ('thatman17', 'p4ssw0rd');
+  ('thatman17', 'p4ssw0rd', 0);
 insert into
 clients(username, password, balance, validate)
 values

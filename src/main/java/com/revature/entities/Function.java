@@ -14,7 +14,7 @@ public class Function implements Dao<Holder>, Other<Client> {
     @Override
     public void insert(Holder holder) {
         try {
-            PreparedStatement pStatement = connection.prepareStatement("insert into clients(username, password) values(?, ?)");
+            PreparedStatement pStatement = connection.prepareStatement("insert into clients(username, password, balance) values(?, ?, 0)");
             pStatement.setString(1, holder.getUsername());
             pStatement.setString(2, holder.getPassword());
             pStatement.executeUpdate();
